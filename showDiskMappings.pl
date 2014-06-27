@@ -4,6 +4,13 @@ use strict;
 
 my $cli = '/u01/app/oracle/ovm-manager-3/ovm_cli/expectscripts/eovmcli admin OVMadminPassword';
 
+#List of regexps to ignore some of the physical disks, that normally do not belong to a VM
+# (physical boot LUNs, repository LUNs, server pool LUNs):
+my @ignoredDisks = qw(lun_OVMprod_dpp-f1-ovms\d+_boot lun_OVMprod_PoolStore lun_OVMprod_RepoStore\d+);
+
+################################# You most likely don't need changes below.
+
+
 my (%phydsk, %vm, %phydskvms);
 
 foreach my $line (`$cli "list physicalDisk"`)
@@ -21,8 +28,8 @@ foreach my $line (`$cli "list vm"`)
 die "No virtual machines found\n" unless %phydsk;
 
 print "Collected physical disks list and vms list.\n";
-print "Pulling list of disks for each vm...\n";
-for my $vmid (keys %vm)
+print "Pulling list of disk mappings for each vm...\n";
+foreach my $vmid (sort {$vm{$a} cmp $vm{$b}} keys %vm)
 {	my $disks;
 	foreach my $line (`$cli "show vm id=$vmid"`)
 	{	#  VmDiskMapping 1 = 0004fb0000130000a82385bb78d8c5b4
@@ -32,7 +39,7 @@ for my $vmid (keys %vm)
 		foreach my $linem (`$cli "show vmdiskMapping id=$1"`)
 		{	#  Virtual Disk Id = 0004fb00001800000ff01c26b6307261  [ddv-otmapp1_20140610083323_20140611053043_20140612101118]
 			next if  $linem !~ /\s+Virtual Disk Id = (\S+)\s+/i ;
-			printf "$vm{$vmid}: %s disk id $1 found.\n", ($phydsk{$1} ? 'physical':'virtual');
+			printf "$vm{$vmid}\t\t: %s disk id $1 found.\n", ($phydsk{$1} ? 'physical':'virtual');
 			push @{ $phydskvms{$1} }, $vm{$vmid}  if $phydsk{$1};
 		}
 		
@@ -40,10 +47,18 @@ for my $vmid (keys %vm)
 	print "WARN: No disks found for vm $vm{$vmid}\n" unless $disks;
 }
 
-print "Report of physical disks usage by vms:\n";
-foreach my $id (keys %phydsk)
-{	print "Disk id=$id name=$phydsk{$id}:\n";
-	my $vms = $phydskvms{$id} ? join(', ', @{ $phydskvms{$id} } ) : 'NO Vms assigned';
-	print "        $vms\n";
+print "\nReport of physical disks usage by vms:\n";
+DSK: foreach my $id (sort {$phydsk{$a} cmp $phydsk{$b}} keys %phydsk)
+{	my $name = $phydsk{$id};
+	foreach my $re (@ignoredDisks)
+	{	next DSK if $name =~ /^$re$/	}
+
+	print "Disk $name id=$id:";
+	print $phydskvms{$id} ?   "\t\t". join(', ', @{ $phydskvms{$id} } ) : "\n\t\t*** NO Vms assigned";
+	print "\n";
 }
+
+exit;
+
+## check for script updates at https://github.com/Tagar/ovm 
 
