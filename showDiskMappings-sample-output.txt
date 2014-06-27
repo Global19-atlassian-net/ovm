@@ -1,0 +1,61 @@
+[root@dpv-ovmm1 expectscripts]# ./showDiskMappings.pl
+Collected physical disks list and vms list.
+Pulling list of disk mappings for each vm...
+ddv-ol65                : physical disk id 0004fb00001800001adcab40f166fb25 found.
+ddv-ol65_gold           : physical disk id 0004fb0000180000e34ebddfee417dc4 found.
+ddv-ol65_template_orig  : virtual disk id 0004fb00001200002ce179c648023ce9.img found.
+ddv-otmapp1             : physical disk id 0004fb00001800006ead9071a90212d3 found.
+ddv-otmapp1             : physical disk id 0004fb000018000081cb80462fb4fd1e found.
+ddv-otmapp1_template    : physical disk id 0004fb00001800009eaa2e286bd6bcfc found.
+ddv-otmapp1_template    : physical disk id 0004fb0000180000fe7fa89c65127900 found.
+ddv-otmweb1             : physical disk id 0004fb00001800003680cc285b18ff1c found.
+ddv-otmweb1             : physical disk id 0004fb0000180000224d1242d45b07ba found.
+ddv-otmweb1_template    : physical disk id 0004fb0000180000ba9428b5ac4f0c04 found.
+ddv-otmweb1_template    : physical disk id 0004fb000018000013ae98fac4ab26bc found.
+dpv-otmapp1             : physical disk id 0004fb0000180000d8ad66a13c0698ed found.
+dpv-otmapp1             : physical disk id 0004fb0000180000703a465fb46e43ae found.
+dpv-otmweb1             : physical disk id 0004fb00001800000ff01c26b6307261 found.
+dpv-otmweb1             : physical disk id 0004fb0000180000921d11dbcbfb5ec6 found.
+dpv-ovmm2               : physical disk id 0004fb0000180000f5d0a194bdca187c found.
+dtv-clc2-n1             : virtual disk id 0004fb0000120000eadd103d8e608227.img found.
+dtv-clc2-n1             : virtual disk id 0004fb0000120000fbcc1102e9ddb184.img found.
+dtv-clc2-n1             : physical disk id 0004fb0000180000b1455f4641c034af found.
+dtv-clc2-n1             : physical disk id 0004fb00001800005120a342f2e5e61b found.
+dtv-clc2-n1             : physical disk id 0004fb0000180000ae8eb6989be3501e found.
+dtv-clc2-n2             : virtual disk id 0004fb000012000071666b7abff0d593.img found.
+dtv-clc2-n2             : virtual disk id 0004fb00001200009adc1be107419ead.img found.
+dtv-clc2-n2             : physical disk id 0004fb0000180000b1455f4641c034af found.
+dtv-clc2-n2             : physical disk id 0004fb00001800005120a342f2e5e61b found.
+dtv-clc2-n2             : physical disk id 0004fb0000180000ae8eb6989be3501e found.
+dtv-oratest1            : virtual disk id 0004fb00001200003af1dd938fb6889d.img found.
+dtv-oratest1            : virtual disk id 0004fb0000120000cc27f5863c282047.img found.
+dtv-otmapp1             : physical disk id 0004fb0000180000bc449b491138bf46 found.
+dtv-otmapp1             : physical disk id 0004fb00001800006f3949607207da5c found.
+dtv-otmweb1             : physical disk id 0004fb00001800000275497dfd7ee7b2 found.
+dtv-otmweb1             : physical disk id 0004fb00001800004b595c6f06839632 found.
+
+Report of physical disks usage by vms:
+Disk ddv-ol65_gold_rootvg id=0004fb0000180000e34ebddfee417dc4:          ddv-ol65_gold
+Disk ddv-ol65_rootvg id=0004fb00001800001adcab40f166fb25:               ddv-ol65
+Disk ddv-otmapp1_appvg id=0004fb000018000081cb80462fb4fd1e:             ddv-otmapp1
+Disk ddv-otmapp1_rootvg id=0004fb00001800006ead9071a90212d3:            ddv-otmapp1
+Disk ddv-otmapp1_template_appvg id=0004fb0000180000fe7fa89c65127900:    ddv-otmapp1_template
+Disk ddv-otmapp1_template_rootvg id=0004fb00001800009eaa2e286bd6bcfc:   ddv-otmapp1_template
+Disk ddv-otmweb1_appvg id=0004fb0000180000224d1242d45b07ba:             ddv-otmweb1
+Disk ddv-otmweb1_rootvg id=0004fb00001800003680cc285b18ff1c:            ddv-otmweb1
+Disk ddv-otmweb1_template_appvg id=0004fb000018000013ae98fac4ab26bc:    ddv-otmweb1_template
+Disk ddv-otmweb1_template_rootvg id=0004fb0000180000ba9428b5ac4f0c04:   ddv-otmweb1_template
+Disk dpv-otmapp1_appvg id=0004fb0000180000703a465fb46e43ae:             dpv-otmapp1
+Disk dpv-otmapp1_rootvg id=0004fb0000180000d8ad66a13c0698ed:            dpv-otmapp1
+Disk dpv-otmweb1_rootvg id=0004fb00001800000ff01c26b6307261:            dpv-otmweb1
+Disk dpv-ovmm2_rootvg id=0004fb0000180000f5d0a194bdca187c:              dpv-ovmm2
+Disk dpv-ovmweb1_appvg id=0004fb0000180000921d11dbcbfb5ec6:             dpv-otmweb1
+Disk dtv-clc2-data1 id=0004fb0000180000b1455f4641c034af:                dtv-clc2-n1, dtv-clc2-n2
+Disk dtv-clc2-flash1 id=0004fb0000180000ae8eb6989be3501e:               dtv-clc2-n1, dtv-clc2-n2
+Disk dtv-clc2-fra1 id=0004fb00001800005120a342f2e5e61b:         		dtv-clc2-n1, dtv-clc2-n2
+Disk dtv-otmapp1_appvg id=0004fb00001800006f3949607207da5c:             dtv-otmapp1
+Disk dtv-otmapp1_rootvg id=0004fb0000180000bc449b491138bf46:            dtv-otmapp1
+Disk dtv-otmweb1_appvg id=0004fb00001800004b595c6f06839632:             dtv-otmweb1
+Disk dtv-otmweb1_rootvg id=0004fb00001800000275497dfd7ee7b2:            dtv-otmweb1
+Disk lun_OVMprod_PoolStore id=0004fb0000180000515233098ef423cd:
+                *** NO Vms assigned
