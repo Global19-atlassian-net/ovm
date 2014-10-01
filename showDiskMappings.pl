@@ -2,7 +2,7 @@
 
 use strict;
 
-my $cli = '/u01/app/oracle/ovm-manager-3/ovm_cli/expectscripts/eovmcli admin OVMadminPassword';
+my $cli = '/u01/app/oracle/ovm-manager-3/ovm_cli/expectscripts/eovmcli admin adminPassword';
 
 #List of regexps to ignore some of the physical disks, that normally do not belong to a VM
 # (physical boot LUNs, repository LUNs, server pool LUNs):
@@ -15,25 +15,26 @@ my (%phydsk, %vm, %phydskvms);
 
 foreach my $line (`$cli "list physicalDisk"`)
 {	#  id:0004fb00001800005120a342f2e5e61b  name:dtv-clc2-fra1
-	next if  $line !~ /\s+id:(\S+)\s+name:(\S+)$/ ;
+	next if  $line !~ /\s+id:(\S+)\s+name:(.+?)$/ ;
 	$phydsk{$1}=$2;
 }
 die "No physical disks found\n" unless %phydsk;
+printf "%d physical disks found\n", scalar keys %phydsk;
 
 foreach my $line (`$cli "list vm"`)
 {	#  id:0004fb00000600007ea7a06224d83172  name:dtv-otmapp1
-	next if  $line !~ /\s+id:(\S+)\s+name:(\S+)$/ ;
+	next if  $line !~ /\s+id:(\S+)\s+name:(.+?)$/ ;
 	$vm{$1}=$2;
 }
-die "No virtual machines found\n" unless %phydsk;
+die "No virtual machines found\n" unless %vm;
+printf "%d virtual machines found\n", scalar keys %vm;
 
-print "Collected physical disks list and vms list.\n";
 print "Pulling list of disk mappings for each vm...\n";
 foreach my $vmid (sort {$vm{$a} cmp $vm{$b}} keys %vm)
 {	my $disks;
 	foreach my $line (`$cli "show vm id=$vmid"`)
 	{	#  VmDiskMapping 1 = 0004fb0000130000a82385bb78d8c5b4
-		next if  $line !~ /\s+VmDiskMapping \d+ = (\S+)$/i ;
+		next if  $line !~ /\s+VmDiskMapping \d+ = (\S+)/i ;
 		$disks++;
 		
 		foreach my $linem (`$cli "show vmdiskMapping id=$1"`)
